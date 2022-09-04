@@ -1,0 +1,79 @@
+if @c == "eof"
+			return Token.new(Token::EOF,"eof")
+				
+		elsif (whitespace?(@c))
+			str =""
+		
+			while whitespace?(@c)
+				str += @c
+				nextCh()
+			end
+		
+			token = Token.new(Token::WS,str)
+		elsif @c == '='
+			nextCh
+			token = Token.new(Token::EQUAL, '=')
+	  
+		  elsif @c == '('
+			nextCh
+			token = Token.new(Token::LPAREN, '(')
+	  
+		  elsif @c == ')'
+			nextCh
+			token = Token.new(Token::RPAREN, ')')
+	  
+		  elsif @c == '+'
+			nextCh
+			token = Token.new(Token::ADDOP, '+')
+	  
+		  elsif @c == '-'
+			nextCh
+			token = Token.new(Token::SUBOP, '-')
+	  
+		  elsif @c == '*'
+			nextCh
+			token = Token.new(Token::MULTOP, '*')
+	  
+		  elsif @c == '/'
+			nextCh
+			token = Token.new(Token::DIVOP, '/')
+
+		elsif numeric?(@c)
+			str = ''
+			while numeric?(@c)
+			  str += @c
+			  nextCh
+			end
+	  
+			token = Token.new(Token::INT, str)
+
+		elsif letter?(@c)
+			str = ''
+			while letter?(@c)
+			  str += @c
+			  nextCh
+			end
+	  
+		
+		# elsif ...
+		# more code needed here! complete the code here 
+		# so that your lexer can correctly recognize,
+		# display and return all tokens
+		# in our grammar that we found in the source code file
+		
+		# FYI: You don't HAVE to just stick to if statements
+		# any type of selection statement "could" work. We just need
+		# to be able to programatically identify tokens that we 
+		# encounter in our source code file.
+		
+		# don't want to give back nil token!
+		# remember to include some case to handle
+		# unknown or unrecognized tokens.
+		# below I make the token that you should pass back
+		else
+			nextCh
+			token = Token.new("unknown","unknown")
+		end
+		puts "Next token is: #{token.type} Next lexeme is: #{token.text}"
+		return token
+end
